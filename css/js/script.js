@@ -1,66 +1,39 @@
+// While you mentioned you don't need interaction, this small script ensures 
+// the grid background extends to cover the entire scrollable area
+
 document.addEventListener('DOMContentLoaded', function() {
-    const gridBackdrop = document.getElementById('grid-backdrop');
+    const rightPanel = document.querySelector('.right-panel');
+    const projectGrid = document.querySelector('.project-grid');
     
-    // Create grid cells
-    function createGridBackdrop() {
-        // Clear existing grid
-        gridBackdrop.innerHTML = '';
+    // Function to adjust the grid background size
+    function adjustGridBackground() {
+        const gridBackground = document.querySelector('.grid-background');
+        const contentHeight = projectGrid.offsetHeight + 80; // Add padding
+        const contentWidth = projectGrid.offsetWidth + 80;
         
-        // Get the right panel dimensions
-        const rightPanel = document.querySelector('.right-panel');
-        const panelWidth = Math.max(rightPanel.offsetWidth, window.innerWidth);
-        const panelHeight = Math.max(rightPanel.offsetHeight, window.innerHeight);
+        // Make sure the grid background covers the entire content
+        if (contentHeight > rightPanel.offsetHeight) {
+            gridBackground.style.height = contentHeight + 'px';
+        }
         
-        // Calculate how many cells we need
-        const cellSize = 40;
-        const cols = Math.ceil(panelWidth / cellSize) + 5; // Add extra columns
-        const rows = Math.ceil(panelHeight / cellSize) + 5; // Add extra rows
-        
-        // Create the cells
-        for (let y = 0; y < rows; y++) {
-            for (let x = 0; x < cols; x++) {
-                const cell = document.createElement('div');
-                cell.className = 'grid-cell';
-                cell.style.left = (x * cellSize) + 'px';
-                cell.style.top = (y * cellSize) + 'px';
-                gridBackdrop.appendChild(cell);
-            }
+        if (contentWidth > rightPanel.offsetWidth) {
+            gridBackground.style.width = contentWidth + 'px';
         }
     }
     
-    // Create initial grid
-    createGridBackdrop();
+    // Adjust initially and on window resize
+    adjustGridBackground();
+    window.addEventListener('resize', adjustGridBackground);
     
-    // Update grid on window resize
-    window.addEventListener('resize', createGridBackdrop);
-    
-    // Simple divider drag functionality
-    const divider = document.querySelector('.divider');
-    let isDragging = false;
-    
-    divider.addEventListener('mousedown', function(e) {
-        isDragging = true;
-        document.body.style.cursor = 'col-resize';
-    });
-    
-    document.addEventListener('mousemove', function(e) {
-        if (!isDragging) return;
+    // Optional: Add hover effect for project items
+    const projectItems = document.querySelectorAll('.project-item');
+    projectItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            this.style.opacity = '0.8';
+        });
         
-        const layout = document.querySelector('.layout');
-        const leftPanel = document.querySelector('.left-panel');
-        
-        // Calculate new width with constraints
-        let newWidth = e.clientX;
-        newWidth = Math.max(250, Math.min(newWidth, window.innerWidth - 400));
-        
-        leftPanel.style.width = newWidth + 'px';
-        createGridBackdrop(); // Update grid when resizing
-    });
-    
-    document.addEventListener('mouseup', function() {
-        if (isDragging) {
-            isDragging = false;
-            document.body.style.cursor = '';
-        }
+        item.addEventListener('mouseleave', function() {
+            this.style.opacity = '1';
+        });
     });
 });
