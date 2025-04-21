@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('container');
     const divider = document.getElementById('divider');
     const rightPanel = document.getElementById('right-panel');
+    const gridBackdrop = document.getElementById('grid-backdrop');
     
     // Fixed width for the left panel
     const staticLeftWidth = 300;
@@ -91,15 +92,25 @@ document.addEventListener('DOMContentLoaded', () => {
         updateLayout();
     });
     
+    // Create grid cells programmatically
+    const cellSize = 40;
+    const gridColumns = 16;
+    const gridRows = 16;
+    
+    // Clear existing grid cells
+    gridBackdrop.innerHTML = '';
+    
+    // Create the grid cells
+    for (let row = 0; row < gridRows; row++) {
+        for (let col = 0; col < gridColumns; col++) {
+            const cell = document.createElement('div');
+            cell.className = 'grid-cell';
+            cell.style.left = `${col * cellSize}px`;
+            cell.style.top = `${row * cellSize}px`;
+            gridBackdrop.appendChild(cell);
+        }
+    }
+    
     // Initialize layout
     updateLayout();
-    
-    // Create grid cells programmatically
-    const gridBackdrop = document.getElementById('grid-backdrop');
-    for (let i = 0; i < 16 * 16; i++) {
-        const cell = document.createElement('div');
-        cell.className = 'grid-cell';
-        cell.style.border = '1px solid #e5e5e5';
-        gridBackdrop.appendChild(cell);
-    }
 });
