@@ -3,47 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ranjani Ramakrishnan</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Ranjani Ramakrishnan | Designer & Creative Technologist</title>
+    <link rel="stylesheet" href="css/js/style.css">
 </head>
 <body>
-    <div id="container">
-        <!-- Left panel - Static Text with fixed width -->
-        <div id="left-panel">
-            <h1>Ranjani Ramakrishnan</h1>
+    <div class="container">
+        <!-- Left Side - Static Information -->
+        <div class="info-panel">
+            <header>
+                <h1>Ranjani Ramakrishnan</h1>
+                <p class="tagline">Visual Designer & Creative Technologist</p>
+                <p class="location">Based in Brooklyn, NY</p>
+            </header>
             
-            <p>
-                I'm a visual designer and creative technologist based in Brooklyn, NY.
-            </p>
+            <section class="about">
+                <p>I work across digital and physical mediums, creating experiences that blend technology with human-centered design. My practice explores the intersection of interaction design, data visualization, and emerging technologies.</p>
+            </section>
             
-            <p>
-                I work across..........
-            </p>
+            <section class="expertise">
+                <h2>Expertise</h2>
+                <ul>
+                    <li>UX/UI Design</li>
+                    <li>Interactive Installations</li>
+                    <li>Data Visualization</li>
+                    <li>Creative Coding</li>
+                    <li>Experience Design</li>
+                </ul>
+            </section>
+            
+            <section class="contact">
+                <h2>Contact</h2>
+                <p><a href="mailto:hello@ranjaniramakrishnan.com">hello@ranjaniramakrishnan.com</a></p>
+                <div class="social-links">
+                    <a href="#" class="social-link">Instagram</a>
+                    <a href="#" class="social-link">LinkedIn</a>
+                    <a href="#" class="social-link">Github</a>
+                </div>
+            </section>
         </div>
         
-        <!-- Draggable divider -->
-        <div id="divider"></div>
-        
-        <!-- Right panel with static grid backdrop and scrollable content -->
-        <div id="right-panel">
-            <!-- Static Grid Backdrop - Fixed size cells -->
-            <div id="grid-backdrop"></div>
+        <!-- Right Side - Gallery Grid -->
+        <div class="gallery-grid">
+            <!-- First Row -->
+            <div class="gallery-item" data-project="project1">
+                <div class="gallery-content">
+                    <h3>Data Visualization</h3>
+                    <p>Interactive climate data explorer</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-project="project2">
+                <div class="gallery-content">
+                    <h3>AR Experience</h3>
+                    <p>Urban storytelling application</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-project="project3">
+                <div class="gallery-content">
+                    <h3>Physical Computing</h3>
+                    <p>Interactive light installation</p>
+                </div>
+            </div>
             
-            <!-- Project Grid with 3x3 layout -->
-            <div id="project-grid">
-                <a href="/project1" class="project-item"><div class="project-box"></div></a>
-                <a href="/project2" class="project-item"><div class="project-box"></div></a>
-                <a href="/project3" class="project-item"><div class="project-box"></div></a>
-                <a href="/project4" class="project-item"><div class="project-box"></div></a>
-                <a href="/project5" class="project-item"><div class="project-box"></div></a>
-                <a href="/project6" class="project-item"><div class="project-box"></div></a>
-                <a href="/project7" class="project-item"><div class="project-box"></div></a>
-                <a href="/project8" class="project-item"><div class="project-box"></div></a>
-                <a href="/project9" class="project-item"><div class="project-box"></div></a>
+            <!-- Second Row -->
+            <div class="gallery-item" data-project="project4">
+                <div class="gallery-content">
+                    <h3>Web Design</h3>
+                    <p>E-commerce platform redesign</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-project="project5">
+                <div class="gallery-content">
+                    <h3>Mobile App</h3>
+                    <p>Health tracking interface</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-project="project6">
+                <div class="gallery-content">
+                    <h3>Generative Art</h3>
+                    <p>Algorithm-based visual system</p>
+                </div>
+            </div>
+            
+            <!-- Third Row -->
+            <div class="gallery-item" data-project="project7">
+                <div class="gallery-content">
+                    <h3>Interactive Map</h3>
+                    <p>Cultural heritage visualization</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-project="project8">
+                <div class="gallery-content">
+                    <h3>Sound Design</h3>
+                    <p>Spatial audio experience</p>
+                </div>
+            </div>
+            <div class="gallery-item" data-project="project9">
+                <div class="gallery-content">
+                    <h3>UI System</h3>
+                    <p>Component library for educational platform</p>
+                </div>
             </div>
         </div>
     </div>
-
-    <script src="script.js"></script>
+    
+    <script src="css/js/script.js"></script>
 </body>
 </html>

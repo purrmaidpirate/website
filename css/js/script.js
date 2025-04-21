@@ -1,110 +1,120 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Select elements
-    const container = document.getElementById('container');
-    const leftPanel = document.getElementById('left-panel');
-    const divider = document.getElementById('divider');
-    const rightPanel = document.getElementById('right-panel');
-    const gridBackdrop = document.getElementById('grid-backdrop');
+// Common initialization for all pages
+document.addEventListener('DOMContentLoaded', () => {
+    // Check if we're on the index page or a project page
+    const isIndexPage = !window.location.pathname.includes('/projects/');
     
-    // Fixed width for left panel
-    const staticLeftWidth = 300;
-    
-    // Track divider position (initially set to left panel width)
-    let dividerPos = staticLeftWidth;
-    
-    // Track dragging state
-    let isDragging = false;
-    
-    // Track scroll position
-    let rightScrollPosition = { x: 0, y: 0 };
-    
-    // Create grid cells
-    function createGridCells() {
-        gridBackdrop.innerHTML = '';
-        
-        const cellSize = 40;
-        const gridColumns = 16;
-        const gridRows = 16;
-        
-        for (let i = 0; i < gridColumns * gridRows; i++) {
-            const cell = document.createElement('div');
-            gridBackdrop.appendChild(cell);
-        }
+    if (isIndexPage) {
+        initIndexPage();
+    } else {
+        initProjectPage();
     }
-    
-    // Update layout based on divider position
-    function updateLayout() {
-        divider.style.left = `${dividerPos}px`;
-        
-        rightPanel.style.width = `calc(100% - ${dividerPos}px)`;
-        rightPanel.style.marginLeft = `${dividerPos - staticLeftWidth}px`;
-        
-        // Restore scroll position
-        rightPanel.scrollLeft = rightScrollPosition.x;
-        rightPanel.scrollTop = rightScrollPosition.y;
-    }
-    
-    // Start dragging
-    divider.addEventListener('mousedown', function(e) {
-        e.preventDefault();
-        isDragging = true;
-        
-        // Store current scroll position
-        rightScrollPosition = {
-            x: rightPanel.scrollLeft,
-            y: rightPanel.scrollTop
-        };
-        
-        divider.classList.add('dragging');
-    });
-    
-    // Handle touch start for mobile
-    divider.addEventListener('touchstart', function(e) {
-        e.preventDefault();
-        isDragging = true;
-        
-        // Store current scroll position
-        rightScrollPosition = {
-            x: rightPanel.scrollLeft,
-            y: rightPanel.scrollTop
-        };
-        
-        divider.classList.add('dragging');
-    });
-    
-    // Handle move events
-    document.addEventListener('mousemove', function(e) {
-        if (!isDragging) return;
-        
-        dividerPos = e.clientX;
-        updateLayout();
-    });
-    
-    document.addEventListener('touchmove', function(e) {
-        if (!isDragging) return;
-        
-        dividerPos = e.touches[0].clientX;
-        updateLayout();
-    });
-    
-    // End dragging
-    document.addEventListener('mouseup', function() {
-        if (isDragging) {
-            isDragging = false;
-            divider.classList.remove('dragging');
-        }
-    });
-    
-    document.addEventListener('touchend', function() {
-        if (isDragging) {
-            isDragging = false;
-            divider.classList.remove('dragging');
-        }
-    });
-    
-    // Create initial grid cells
-    createGridCells();
-    
-    // Set initial layout
-    updateLayout();
 });
+
+// Project page functionality
+function initProjectPage() {
+    // Get the current project ID from the URL
+    // Example: if URL is projects/project3.html, projectId will be 'project3'
+    const path = window.location.pathname;
+    const filename = path.split('/').pop();
+    const projectId = filename.split('.')[0];
+    
+    // Set up navigation links based on the current project
+    setupNavigation(projectId);
+    
+    // Add fade-in animation for project images when they enter the viewport
+    const projectImages = document.querySelectorAll('.project-image');
+    
+    if ('IntersectionObserver' in window) {
+        const imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    imageObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        projectImages.forEach(image => {
+            image.style.opacity = '0';
+            image.style.transition = 'opacity 0.8s ease-in';
+            imageObserver.observe(image);
+        });
+    } else {
+        // Fallback for browsers that don't support IntersectionObserver
+        projectImages.forEach(image => {
+            image.classList.add('visible');
+        });
+    }
+}
+
+// Function to set up the previous and next project navigation
+function setupNavigation(currentProjectId) {
+    // This is a simplified example - in a real implementation, 
+    // you would need to define your projects order or fetch it from a data source
+    const projectOrder = [
+        'project1', 'project2', 'project3', 
+        'project4', 'project5', 'project6',
+        'project7', 'project8', 'project9'
+    ];
+    
+    // Find the index of the current project
+    const currentIndex = projectOrder.indexOf(currentProjectId);
+    
+    // If the project is not found, exit the function
+    if (currentIndex === -1) return;
+    
+    // Get previous and next project IDs
+    const prevProjectId = currentIndex > 0 ? projectOrder[currentIndex - 1] : projectOrder[projectOrder.length - 1];
+    const nextProjectId = currentIndex < projectOrder.length - 1 ? projectOrder[currentIndex + 1] : projectOrder[0];
+    
+    // Update the navigation links
+    const prevProjectLink = document.querySelector('.prev-project');
+    const nextProjectLink = document.querySelector('.next-project');
+    
+    if (prevProjectLink) {
+        prevProjectLink.href = `./${prevProjectId}.html`;
+    }
+    
+    if (nextProjectLink) {
+        nextProjectLink.href = `./${nextProjectId}.html`;
+    }
+}
+
+// Index page functionality
+function initIndexPage() {
+    // Get all gallery items
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    
+    // Add click event listeners to each gallery item
+    galleryItems.forEach(item => {
+        item.addEventListener('click', () => {
+            // Get the project identifier from the data attribute
+            const projectId = item.getAttribute('data-project');
+            
+            // Navigate to the project page
+            window.location.href = `projects/${projectId}.html`;
+        });
+    });
+    
+    // Add animation for gallery items on page load
+    setTimeout(() => {
+        galleryItems.forEach((item, index) => {
+            setTimeout(() => {
+                item.style.opacity = '1';
+            }, 100 * index);
+        });
+    }, 300);
+    
+    // Add a simple hover effect for gallery items
+    galleryItems.forEach(item => {
+        const content = item.querySelector('.gallery-content');
+        
+        item.addEventListener('mouseenter', () => {
+            content.style.transform = 'translateY(0)';
+        });
+        
+        item.addEventListener('mouseleave', () => {
+            content.style.transform = 'translateY(70%)';
+        });
+    });
+}
