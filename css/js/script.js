@@ -1,35 +1,110 @@
-// This is a minimal JavaScript file that can be expanded for future functionality
-
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Page loaded successfully');
+    // Select elements
+    const container = document.getElementById('container');
+    const leftPanel = document.getElementById('left-panel');
+    const divider = document.getElementById('divider');
+    const rightPanel = document.getElementById('right-panel');
+    const gridBackdrop = document.getElementById('grid-backdrop');
     
-    // Get references to main elements
-    const leftPanel = document.querySelector('.left-panel');
-    const rightPanel = document.querySelector('.right-panel');
-    const projectItems = document.querySelectorAll('.project-item');
+    // Fixed width for left panel
+    const staticLeftWidth = 300;
     
-    // Optional: Add simple hover effect for project items
-    projectItems.forEach(item => {
-        item.addEventListener('mouseenter', function() {
-            this.style.opacity = '0.9';
-        });
+    // Track divider position (initially set to left panel width)
+    let dividerPos = staticLeftWidth;
+    
+    // Track dragging state
+    let isDragging = false;
+    
+    // Track scroll position
+    let rightScrollPosition = { x: 0, y: 0 };
+    
+    // Create grid cells
+    function createGridCells() {
+        gridBackdrop.innerHTML = '';
         
-        item.addEventListener('mouseleave', function() {
-            this.style.opacity = '1';
-        });
-    });
-    
-    // This function ensures the grid background covers the entire content area
-    function adjustGridBackground() {
-        const gridContent = document.querySelector('.project-grid');
-        const minHeight = gridContent.offsetHeight + 80; // Add some padding
+        const cellSize = 40;
+        const gridColumns = 16;
+        const gridRows = 16;
         
-        if (minHeight > rightPanel.offsetHeight) {
-            rightPanel.style.minHeight = minHeight + 'px';
+        for (let i = 0; i < gridColumns * gridRows; i++) {
+            const cell = document.createElement('div');
+            gridBackdrop.appendChild(cell);
         }
     }
     
-    // Adjust grid on page load and window resize
-    adjustGridBackground();
-    window.addEventListener('resize', adjustGridBackground);
+    // Update layout based on divider position
+    function updateLayout() {
+        divider.style.left = `${dividerPos}px`;
+        
+        rightPanel.style.width = `calc(100% - ${dividerPos}px)`;
+        rightPanel.style.marginLeft = `${dividerPos - staticLeftWidth}px`;
+        
+        // Restore scroll position
+        rightPanel.scrollLeft = rightScrollPosition.x;
+        rightPanel.scrollTop = rightScrollPosition.y;
+    }
+    
+    // Start dragging
+    divider.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+        isDragging = true;
+        
+        // Store current scroll position
+        rightScrollPosition = {
+            x: rightPanel.scrollLeft,
+            y: rightPanel.scrollTop
+        };
+        
+        divider.classList.add('dragging');
+    });
+    
+    // Handle touch start for mobile
+    divider.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        isDragging = true;
+        
+        // Store current scroll position
+        rightScrollPosition = {
+            x: rightPanel.scrollLeft,
+            y: rightPanel.scrollTop
+        };
+        
+        divider.classList.add('dragging');
+    });
+    
+    // Handle move events
+    document.addEventListener('mousemove', function(e) {
+        if (!isDragging) return;
+        
+        dividerPos = e.clientX;
+        updateLayout();
+    });
+    
+    document.addEventListener('touchmove', function(e) {
+        if (!isDragging) return;
+        
+        dividerPos = e.touches[0].clientX;
+        updateLayout();
+    });
+    
+    // End dragging
+    document.addEventListener('mouseup', function() {
+        if (isDragging) {
+            isDragging = false;
+            divider.classList.remove('dragging');
+        }
+    });
+    
+    document.addEventListener('touchend', function() {
+        if (isDragging) {
+            isDragging = false;
+            divider.classList.remove('dragging');
+        }
+    });
+    
+    // Create initial grid cells
+    createGridCells();
+    
+    // Set initial layout
+    updateLayout();
 });

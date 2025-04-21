@@ -7,31 +7,43 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Left panel with text -->
-    <div class="left-panel">
-        <h1>Ranjani Ramakrishnan</h1>
+    <div id="container">
+        <!-- Left panel - Static Text with fixed width -->
+        <div id="left-panel">
+            <h1>Ranjani Ramakrishnan</h1>
+            
+            <p>
+                I'm a visual designer and creative technologist based in Brooklyn, NY.
+            </p>
+            
+            <p>
+                I work across..........
+            </p>
+        </div>
         
-        <p>I'm a visual designer and creative technologist based in Brooklyn, NY.</p>
+        <!-- Draggable divider -->
+        <div id="divider"></div>
         
-        <p>I work across..........</p>
-    </div>
-    
-    <!-- Right panel with grid and project squares -->
-    <div class="right-panel">
-        <!-- Project grid -->
-        <div class="project-grid">
-            <a href="/project1" class="project-item"></a>
-            <a href="/project2" class="project-item"></a>
-            <a href="/project3" class="project-item"></a>
-            <a href="/project4" class="project-item"></a>
-            <a href="/project5" class="project-item"></a>
-            <a href="/project6" class="project-item"></a>
-            <a href="/project7" class="project-item"></a>
-            <a href="/project8" class="project-item"></a>
-            <a href="/project9" class="project-item"></a>
+        <!-- Right panel with static grid backdrop and scrollable content -->
+        <div id="right-panel">
+            <!-- Static Grid Backdrop - Fixed size cells -->
+            <div id="grid-backdrop"></div>
+            
+            <!-- Project Grid with 3x3 layout -->
+            <div id="project-grid">
+                <a href="/project1" class="project-item"><div class="project-box"></div></a>
+                <a href="/project2" class="project-item"><div class="project-box"></div></a>
+                <a href="/project3" class="project-item"><div class="project-box"></div></a>
+                <a href="/project4" class="project-item"><div class="project-box"></div></a>
+                <a href="/project5" class="project-item"><div class="project-box"></div></a>
+                <a href="/project6" class="project-item"><div class="project-box"></div></a>
+                <a href="/project7" class="project-item"><div class="project-box"></div></a>
+                <a href="/project8" class="project-item"><div class="project-box"></div></a>
+                <a href="/project9" class="project-item"><div class="project-box"></div></a>
+            </div>
         </div>
     </div>
-    <!-- Add this line before the closing </body> tag in your HTML file -->
-<script src="script.js"></script>
+
+    <script src="script.js"></script>
 </body>
 </html>

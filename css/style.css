@@ -5,57 +5,99 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+#container {
     display: flex;
     height: 100vh;
+    width: 100vw;
+    position: relative;
     overflow: hidden;
 }
 
-/* Left panel - fixed width */
-.left-panel {
-    width: 35%;
-    padding: 40px;
-    height: 100vh;
+/* Left panel */
+#left-panel {
+    width: 300px;
+    height: 100%;
+    padding: 32px;
+    flex-shrink: 0;
 }
 
-.left-panel h1 {
+#left-panel h1 {
     font-size: 28px;
     font-weight: bold;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
 }
 
-.left-panel p {
-    margin-bottom: 25px;
+#left-panel p {
+    margin-bottom: 32px;
     line-height: 1.6;
 }
 
-/* Right panel with grid background */
-.right-panel {
-    flex: 1;
-    height: 100vh;
-    overflow-y: auto;
-    background-image: 
-        linear-gradient(#ddd 1px, transparent 1px),
-        linear-gradient(90deg, #ddd 1px, transparent 1px);
-    background-size: 40px 40px;
-    background-color: white;
+/* Divider */
+#divider {
+    width: 1px;
+    height: 100%;
+    background-color: #333;
+    position: absolute;
+    left: 300px;
+    cursor: col-resize;
+    z-index: 10;
+}
+
+#divider:hover {
+    background-color: #000;
+}
+
+/* Right panel */
+#right-panel {
+    height: 100%;
+    overflow: auto;
+    position: relative;
+    flex-grow: 1;
+}
+
+/* Grid backdrop */
+#grid-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 640px; /* 16 columns × 40px */
+    height: 640px; /* 16 rows × 40px */
+    display: grid;
+    grid-template-columns: repeat(16, 40px);
+    grid-template-rows: repeat(16, 40px);
+    z-index: 0;
+}
+
+#grid-backdrop div {
+    border: 1px solid #ddd;
 }
 
 /* Project grid */
-.project-grid {
+#project-grid {
+    position: relative;
+    z-index: 1;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    gap: 40px;
-    padding: 40px;
-    max-width: 1200px;
-    margin: 0 auto;
+    gap: 32px;
+    padding: 32px;
+    min-width: 800px;
 }
 
 .project-item {
+    display: block;
     aspect-ratio: 1/1;
+}
+
+.project-box {
+    width: 100%;
+    height: 100%;
     border: 1px solid #000;
     background-color: white;
-    text-decoration: none;
-    display: block;
 }
