@@ -9,57 +9,58 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     overflow: hidden;
     height: 100vh;
+    width: 100vw;
 }
 
-#container {
+/* Main layout container */
+.layout {
     display: flex;
     height: 100vh;
-    position: relative;
+    width: 100vw;
     overflow: hidden;
 }
 
-/* Left panel styles */
-#left-panel {
+/* Left panel */
+.left-panel {
     width: 300px;
     height: 100%;
-    padding: 32px;
+    padding: 20px;
     flex-shrink: 0;
     overflow-y: auto;
 }
 
-#left-panel h1 {
+.left-panel h1 {
     font-size: 28px;
     font-weight: bold;
-    margin-bottom: 32px;
+    margin-bottom: 30px;
 }
 
-#left-panel p {
-    margin-bottom: 32px;
-    line-height: 1.6;
+.left-panel p {
+    margin-bottom: 20px;
+    line-height: 1.5;
 }
 
-/* Divider styles */
-#divider {
+/* Divider */
+.divider {
     width: 1px;
-    height: 100%;
-    background-color: #333;
-    position: absolute;
-    left: 300px;
-    cursor: col-resize;
-    z-index: 10; /* Ensure divider is above other elements */
-}
-
-#divider:hover, 
-#divider.dragging {
     background-color: #000;
+    height: 100%;
+    flex-shrink: 0;
 }
 
-/* Right panel styles */
-#right-panel {
+/* Right panel */
+.right-panel {
     flex-grow: 1;
     height: 100%;
     position: relative;
     overflow: auto;
+}
+
+/* Grid container */
+.grid-container {
+    position: relative;
+    min-width: 100%;
+    min-height: 100%;
 }
 
 /* Grid backdrop */
@@ -67,28 +68,28 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    width: 640px; /* 16 columns x 40px */
-    height: 640px; /* 16 rows x 40px */
+    width: 100%;
+    height: 100%;
     z-index: 0;
 }
 
 .grid-cell {
-    border: 1px solid #e5e5e5;
     position: absolute;
+    border: 1px solid #ddd;
     width: 40px;
     height: 40px;
 }
 
 /* Project grid */
-#project-grid {
+.project-grid {
     position: relative;
     z-index: 1;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
+    grid-template-rows: repeat(3, minmax(200px, 1fr));
     gap: 32px;
     padding: 32px;
-    min-width: 800px;
+    max-width: 900px;
 }
 
 .project-item {
@@ -99,6 +100,6 @@ body {
 .project-box {
     width: 100%;
     height: 100%;
-    border: 1px solid #333;
+    border: 1px solid #000;
     background-color: white;
 }
